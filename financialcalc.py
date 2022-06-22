@@ -1,22 +1,6 @@
 import streamlit as st
-import plotly as plt
 import pandas as pd
 import numpy as np
-import base64
-
-def filedownload(df):
-    csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()  # strings <-> bytes conversions
-    href = f'<a href="data:file/csv;base64,{b64}" download="needed_calculation.csv">Download CSV File</a>'
-    return href
-
-def filedownload_1(df):
-    csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()  # strings <-> bytes conversions
-    href = f'<a href="data:file/csv;base64,{b64}" download="accumulated_wealth_creation.csv">Download CSV File</a>'
-    return href
-
-
 
 st.set_page_config(
     page_title="Financial Planning Calculator")
@@ -63,14 +47,12 @@ df2['future_value'] = df2['investment'] * ((1 + growth_rate)**(df2['months_remai
 
 st.header('First dataframe to calculate needed investment value')
 st.dataframe(df)
-st.markdown(filedownload(df), unsafe_allow_html=True)
 st.line_chart(df['future_value'])
 
 
 
 st.header('Second dataframe to calculate accumulated wealth at the year of retirement')
 st.dataframe(df2)
-st.markdown(filedownload_1(df2), unsafe_allow_html=True)
 st.line_chart(df2['future_value'])
 
 st.write(f"Your accumulated wealth will be at {year_of_retirement} will be {sum(df2['future_value'])}")
